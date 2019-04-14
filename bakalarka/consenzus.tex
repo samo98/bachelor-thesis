@@ -1,0 +1,183 @@
+\chapter{Problém konsenzu}
+
+Problém konsenzu vyžaduje dohodu medzi viacerými entitami na jednej a tej
+istej \textit{hodnote} (\textit{hodnota} môže byť ľubovoľný typ informácie).
+Tento problém začne byť zaujímavý keď pripustíme, že niektoré z entít
+podieľajúcich sa na konsenze budú nespoľahlivé alebo dokonca zlyhajú. V takomto
+prípade budeme očakávať od riešenia (súbor pravidiel, ktoré keď budú uzly dodržiavať
+dosiahnu konsenzus, ďalej ho budeme nazývať \textit{protokol}),
+že entity, ktoré ešte pracujú podľa protokolu budú schopné dosiahnuť konsenzus
+aj napriek týmto zlyhaniam.
+
+Aby sme vylúčili triviálne riešenia (všetky entity odsúhlasia konsenzus na vopred 
+dohodnutej konštante a podobne), výsledná dohodnutá hodnota musí závisieť na vstupe
+daných entít, preto pred začatím procesu dohadovania konsenzu
+musia entity navrhnúť kandidátov. \textit{Kandidáti} budú hodnoty
+z ktorých entity následne vyberú jedného, na ktorom sa všetci zhodnú a ustanovia
+konsenzus.
+Celý konsenzus protokol musí mať teda tri fázy: entity navrhnú kandidátov na hodnoty,
+entity spolu komunikujú a na konci každá entita oznámi, na ktorom kandidátovi
+na hodnotu sa dohodli, pričom všetky nezlyhané entity oznámia toho istého kandidáta.
+
+Tento problém je jeden z najzákladnejších problémov informatiky.
+Mnohí informatici ho ho riešili už niekoľko desaťročí a dokázali prísť
+na mnohé zaujímavé dôsledky (napríklad \textit{dôkaz nemožnosti konsenzu}
+\cite{fischer1982impossibility}). Takto zadaný problém je však veľmi všeobecný
+a dá sa riešiť na rôznych modeloch, kde si konkretizujeme naše entity, spôsob
+komunikácie medzi nimi a ďalšie vlastnosti siete entít. A teda napriek
+\textit{dôkazu nemožnosti konsenzu} \cite{fischer1982impossibility} dokážeme dnes
+za istých podmienok spravovať distribuované systémy.
+
+\section {Model siete v našej práci}
+
+Teraz si zadefinujeme model siete, ktorý budeme uvažovať v celej práci.
+Napriek tomu, že náš model bude teoretický, všetky rozhodnutia konkretizovania
+modelu sa budeme snažiť robiť na základe skúseností z praxe aby prípadná
+implementácia do reálneho distribuovaného systému nebola obtiažna, ale zároveň
+nebudeme brať mnohé reálne problémy do modelu, ktoré priamo nesúvisia s
+problémom konsenzu a iba by komplikovali konsenzus a dôkazy správnosti v ňom.
+
+V našej práci nás bude tento problém zaujímať hlavne v distribuovaných systémoch.
+A preto v našom modeli entity budú jednotlivé počítače v sieti.
+V celej práci budeme počítače (alebo ľubovoľné entity) v sieti nazývať 
+\textit{uzly}.
+\\*
+\textit{Sieť} je množina uzlov, ktoré sú poprepájané každý s každým a vedia si
+teda medzi sebou vymieňať ľubovoľné správy. Nebudeme dávať žiadne obmedzenia
+na veľkosť správ a ani ich podobu. Dokonca nebudeme mať žiadne predpoklady na
+poradie doručenia správ. Avšak budeme predpokladať, že správy budú
+v konečnom čase doručené v nezmenenej podobe (takýto predpoklad nám v reálnej
+sieti vie ponúknuť kvalitné šifrovanie).
+Celá komunikácia bude prebiehať asynchrónne a teda nepredpokladáme žiadnu
+synchronizáciu uzlov.
+
+Takisto v našom modeli povolíme byzantínske chyby uzlov.
+Čo znamená, že na správanie uzlov nebudeme dávať žiadne predpoklady.
+Toto zodpovedá aj reálnemu svetu, kde uzol môže zlyhať po hardvérovej alebo
+softvérovej chybe alebo dokonca nepriateľ vie upraviť vykonávaný kód (na tento
+upravený kód už nemôžeme mať žiadne predpoklady) na uzle.
+V poslednom z prípadov keď nepriateľ upraví vykonávaný kod na uzle budeme
+hovoriť, že útočník sa \uv{zmocnil} uzlu.
+
+A teda uzly budeme vždy triediť do dvoch základných kategórií, tie čo sa správajú
+podľa dohodnutého protokolu (budeme hovoriť, že sa držia protokolu) a tie ktoré
+porušujú protokol (nebudeme rozlišovať z akého dôvodu). Uzlu ktorý porušuje protokol budeme hovoriť, že \textit{zlyhal}.
+
+\section {Od teoretického modelu k bankovému sektoru}
+
+Na prvý pohľad nečakane, môžeme konsenzus využiť vo finančnej sieti.
+Schvaľovanie konsenzu zodpovedá schvaľovaniu finančných transakcií a uzly sú
+jednotliví používatelia peňazí. Stav siete je vlastne zoznam uskutočnených
+transakcií (konkrétne implementácie ukladania a manipulovania so stavom necháme
+na jednotlivých protokoloch).
+Tento zoznam sa zvykne nazývať \textit{bloková reťaz}, keďže každú
+transakciu vieme zapísať ako jeden blok dát o nej a tieto transakcie vieme
+zoradiť za sebou do reťaze, ktorú postupne rozširujeme a na jej koniec
+zapisujeme nové transakcie.
+Dnešná celosvetová finančná sieť v takomto jednoduchom ponímaní neexistuje. Na
+svete existuje veľa rôznych mien a prevody peňazí medzi menami nie sú až také
+jednoduché ako prevody v jednej mene.
+
+Celkovo svet vyzerá ako mnoho malých (alebo väčších) sietí s centrálnou autoritou,
+ktorou sú banky, ktoré nám naše transakcie musia schváliť.
+A teda prevody peňazí z jedného konca sveta na druhý sú náročné.
+Neskôr si popíšeme aké sú nevýhody tohto systému s jednou autoritou (nazývané aj
+centralizované systémy) a aké sú možnosti náhrady tohto systému.
+
+Na záver podkapitoly si zhrňme všetky očakávania od finančnej siete, ktoré
+aktuálna finančná sieť nespĺňa a v ďalšej podkapitole si predstavíme protokoly
+na nájdenie konsenzu, ktoré sa snažia aspoň niektoré vlastnosti spĺňať (a naopak
+tým zlým sa vyhýbať).
+V kapitole \ref{kap:stellar} potom predstavíme \textit{Stellar konsenzus protokol},
+ktorý bude všetky tieto vlastnosti spĺňať a budeme sa mu v práci venovať hlbšie.
+
+\begin{itemize}
+\item  \textbf{Jedna globálna} -- chceme nahradiť veľa aktuálnych sietí jednou
+celosvetovo použiteľnou
+\item  \textbf{Decentralizovaná} -- nechceme nechať štát a banky kontrolovať náš
+finančný tok, chceme nech všetci zapojený v sieti dohliadajú na dodržovanie
+pravidiel
+\item  \textbf{Nízka latencia} -- nech už posielame peniaze kdekoľvek chceme, aby
+bola transakcia vykonaná v čo najkratšom čase
+\item  \textbf{Otvorené členstvo v sieti} -- žiadne prekážky k vytvoreniu si
+účtu, tak ako dnes v mnohých bankách, možnosť otvoriť si účet kdekoľvek na svete
+v čo najkratšom čase
+\item  \textbf{Otvorené členstvo medzi schvaľovateľmi} -- žiadne prekážky ku
+zapojeniu sa do schvaľovaciemu procesu
+\item  \textbf{Flexibilná dôvera} -- najradšej by sme si sami určili, komu
+dôverujeme a neboli zaviazaný bankovým inštitúciám, ktoré môžu ovplyvňovať
+hodnotu meny
+\end{itemize}
+
+\pagebreak
+
+\section {Centralizovaný protokol a jeho problémy}
+
+Najčastejším a najjednoduchším riešením tohto problému je \textbf{centralizácia}.
+Systém navrhneme tak, že obsahuje jeden hlavný uzol, označme ho $\textbf{A}$.
+Tento uzol je autorita a udržiava stav celého systému.
+Teraz pokiaľ chce iný uzol zmeniť stav systému alebo uložiť dáta musí
+nadviazať spojenie s uzlom $\textbf{A}$ a požiadať o zmenu stavu. Uzol $\textbf{A}$ túto žiadosť
+zvaliduje (aby nebola porušená konzistentnosť, alebo ináč narušený chod systému)
+a tento stav uloží. Ostatné uzly už budú potom informované o novom stave pri
+akejkoľvek komunikácií s uzlom $\textbf{A}$.
+Uzol $\textbf{A}$ je teda zárukou toho, že údaje v systéme sú korektné a systém vie stále
+vykonávať svoju úlohu.
+Nech sa teda útočník zmocní ľubovoľného uzla okrem $\textbf{A}$, alebo nech ľubovoľný uzol
+zlyhá, systém môže stále pokračovať v svojej úlohe.
+Obrovská nevýhoda však je, že práve uzol $\textbf{A}$ je slabina celého systému. Keď zlyhá
+uzol $\textbf{A}$ celý systém nie je schopný pokračovať. Ďalšou veľkou nevýhodou je, že
+všetky požiadavky systému musí validovať práve uzol $\textbf{A}$ a teda môže dôjsť k jeho
+preťaženiu.
+
+\section {Známe decentralizované protokoly}
+
+\begin{flushleft}\textbf {Dôkaz prácou}\end{flushleft}
+\vspace{-4mm}
+Jedným z prvých pokusov o zlepšenie finančného systému je Bitcoin
+\cite{nakamoto2009bitcoin}.
+Bol to krok dobrým smerom, keďže ako prvá kryptomena dokázala fungovať na 
+decentralizovanej myšlienke a teda sa vyhla používaniu jednej centrálnej autority.
+\\*
+Napriek tomu nedokázal vyriešiť všetky problémy popísané
+vyššie.
+\\*
+Je založený na myšlienke dôkazu prácou \cite{dwork1992pricing}.
+Veľkou nevýhodou je jeho neekologickosť, keďže plytvá zdrojmi. Existuje odhad z
+roku 2014, kedy Bitcoin skonzumoval toľko elektrickej energie ako celá krajina
+Írsko \cite{malone2014bitcoin}. Totiž na schválenie transakcie musí schvaľovateľ vyriešiť ťažkú
+matematickú šifru, čo tiež má za následok pomalosť transakcií. Takisto nie každý
+sa môže stať schvaľovateľom, keďže schvaľovateľ musí disponovať veľkou
+výpočtovou silou aby dokázal vyriešiť matematické šifry.
+
+\begin{flushleft}\textbf {Dôkaz bohatstvom}\end{flushleft}
+\vspace{-4mm}
+Jeho alternatívou je napríklad protokol dôkazu bohatstvom \cite{king2012ppcoin}. Tento
+protokol sa vyhýba problému protokolu dôkazu prácou, ktorého transakcie boli
+pomalé.
+\\*
+Jeden z najväčších problémov je takzvaný \mbox{\uv{nič v stávke}\thinspace
+problém (angl. nothing-at-stake).}
+Keďže schvaľovanie transakcií je lacné (časovo aj výpočtovo),
+nič nebráni schvaľovateľom podporovať rôzne blokové reťaze (transakčné
+histórie).
+
+\newpage
+
+\begin{flushleft}\textbf {Praktická byzantínska tolerancia voči chybám}\end{flushleft}
+\vspace{-4mm}
+Ďalším diametrálne odlišným prístupom je protokol \textit{praktickej byzantínskej
+tolerancie voči chybám} \cite{castro1999practical}.
+Tento protokol na rozdiel od vyššie spomínaných nemá žiadne predpoklady na
+správanie sa nepriateľských uzlov (toto správanie označujeme ako byzantínske a uzly,
+ktoré sa tak správajú označujeme ako Byzantíncov).
+Takisto dosahuje zaručene nízku latenciu.
+\\*
+Nespĺňa však našu požiadavku o otvorenom členstve. Sieť sa spolieha na to, že
+útočník nemôže rýchlo a jednoducho pridať veľa uzlov do siete a tak sa
+zmocniť dostatočne veľkého množstva uzlov, čím by vedel ovplyvňovať hodnoty na ktorých
+sieť dosiahne konsenzus.
+Takýmto útokom sa tiež zvykne hovoriť \textit{Sybil útoky}.
+A preto zaradenie uzla do siete musí prejsť schvaľovacím procesom.
+Vo všeobecnosti, siete používajúce tento protokol, nechávajú schvaľovanie
+členstva na centrálnej autorite.

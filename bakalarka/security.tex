@@ -1,0 +1,123 @@
+\chapter{Metriky odolnosti siete}
+
+V tejto kapitole si predstavíme našu metriku podľa ktorej budeme vyhodnocovať,
+ktorá sieť je bezpečnejšia a životaschopnejšia na základe toho ako si uzly
+zvolili kvórové rezy.
+Budeme tiež chcieť sa pozrieť na niektoré možné varianty volenia si kvórových
+rezov. Vyrátame a  porovnáme ich metriky a tiež odôvodníme veľkosti týchto metrík.
+Na základe tohto dostaneme bližší vhľad do volenia si kvórových rezov, tak aby
+bola sieť čo najviac odolná voči potencionálnym útočníkom alebo nepredvídateľným
+chybám v uzloch.
+
+\paragraph {Bezpečnostný koeficient} Stellar systém $<\textbf{V},\textbf{Q}>$
+má \textit{bezpečnostný koeficient} rovný $k$,
+kde $k$ je najmenšie prirodzené číslo také, že existuje $k$ prvková množina
+uzlov $B \in V$ pre ktorú platí, že $<\textbf{V}, \textbf{Q}>^B$ nie je
+\textit{bezpečný}.
+
+\vspace{4mm}
+Inými slovami: v sieti musí zlyhať aspoň $k$ uzlov aby sieť prestala byť
+\textit{bezpečná}. Teda existuje $k$ prvková množina uzlov, ktorá nie je
+\textit{nepotrebná}, konkrétne porušuje prvú podmienku \textit{nepotrebnej množiny}.
+Naopak sieť dokáže prežiť aj napriek zlyhaniu $k-1$ ľubovoľných uzlov a ani
+jeden uzol dodržujúci protokol nebude divergovať.
+Samozrejme máme tu špeciálny prípad keď $k=0$, vtedy už samotná sieť nie je
+\textit{bezpečná}.
+
+Podobne si vieme definovať koeficient pre životaschopnosť.
+
+\paragraph {Koeficient životaschopnosti} Stellar systém $<\textbf{V},\textbf{Q}>$,
+má \textit{koeficient životaschopnosti} rovný $k$, kde $k$ je najmenšie prirodzené
+číslo také, že existuje $k$ prvková množina uzlov $B \in V$ pre ktorú platí, že
+$<\textbf{V}, \textbf{Q}>^B$ nie je \textit{životaschopná}.
+
+\vspace{4mm}
+V sieti musí zlyhať aspoň $k$ uzlov aby sieť prestala byť
+\textit{životaschopná}. Teda existuje $k$ prvková množina uzlov, ktorá nie je
+\textit{nepotrebná}, konkrétne porušuje druhú podmienku \textit{nepotrebnej množiny}.
+Naopak sieť dokáže prežiť aj napriek zlyhaniu $k-1$ ľubovoľných uzlov a všetky uzly
+budú schopné sa ďalej podieľať na prijímaní konsenzu.
+Špeciálny prípad keď $k=0$, znamená, že už samotná sieť nie je \textit{životaschopná}.
+
+Na záver si zadefinujeme koeficient, ktorý nám bude zaručovať obe podmienky spomenuté
+vyššie. To čo si totiž môžeme uvedomiť je, že pokiaľ náš \textit{bezpečnostný koeficient}
+je $k$, tak síce žiadne uzly dodržujúce protokol sme \uv{nestratili} v zmysle, že
+neschvaľujú protichodné bloky aj keď teda $k$ uzlov zlyhalo. Napriek tomu táto
+množina $k$ uzlov nemusí byť nepotrebná, keďže môže porušovať druhú podmienku a teda
+niektoré uzly mohli prestať byť schopné podieľať sa na schvaľovaní blokov.
+Podobne to funguje naopak pri \textit{koeficiente životaschopnosti}.
+
+\paragraph {Koeficient odolnosti} Stellar systém $<\textbf{V},\textbf{Q}>$,
+má koeficient odolnosti rovný minimu z jeho \textit{bezpečnostného koeficientu}
+a \textit{koeficientu životaschopnosti}.
+
+\vspace{4mm}
+Všimnime si, že pokiaľ sieť obsahuje menej zlyhaných uzlov ako je jej
+\textit{koeficient odolnosti}, tak to nijak neovplyňuje chod samotnej siete a ani
+jedného uzla dodržujúceho protokol. Keďže každá takáto množina je \textit{nepotrebná}.
+Po zlyhaní ďalšieho uzla už ale žiadne garancie nie sú, systém môže byť narušený
+aj nemusí, keďže tiež záleží, ktoré konkrétne uzly zlyhajú.
+
+\section {Životaschopnosť}
+
+Skúsme sa najprv zamerať na vyhodnocovanie metriky životaschopnosti siete.
+V tomto prípade hľadáme najmenšiu (počtom prvkov) množinu uzlov $B$, ktorými
+pokazíme životaschopnosť siete, teda, že bez nich už ostatné uzly nebudú
+tvoriť kvórum v pôvodnom systéme.
+Z definície kvóra vieme ale túto úlohu preformulovať. Kvórum musí obsahovať
+aspoň jeden kvórový rez každého jeho prvku.
+Je to teda ekvivalentné nájdeniu takého $B$, že niektorý uzol dodržujúci protokol
+bude mať v každom kvórovom reze aspoň jeden prvok $B$.
+Vtedy budeme hovoriť, že tento uzol prestal byť \textit{životaschopný}.
+Nájsť takéto $B$ môžme ale pre každý vrchol zvlášť a potom pre sieť stačí vybrať
+minimálne $B$. Veľkosť takéhoto minimálneho $B$ bude potom náš \textit{koeficient
+životaschopnosti}.
+
+Chceme teda nájsť takú najmenšiu množinu uzlov $B$, že pre uzol $u$ a pre každý
+jeho kvórový rez platí, že aspoň jeden jeho prvok je z $B$.
+Toto je však známy problém pokrytia množín (angl. \textit{set cover problem}),
+kde prvky sú všetky uzly nachádzajúce sa v ľubovoľnom kvórovom reze $u$.
+Množiny ktoré chceme pokryť sú kvórové rezy a teda hľadáme najmenšiu množinu,
+ktorá tieto množiny pokryje.
+O tomto probléme je známe, že je NP-úplný, čo nám teda hovorí, že tento koeficient
+vo všeobecnosti nebudeme vedieť rýchlo zistiť, aj keď na tento problém existujú
+rôzne rýchle a rôzne dobré aproximačné algoritmy, ktoré by nám pomohli aspoň
+približne určiť koľko zlyhaným uzlov naša sieť prežije.
+
+Poďme sa teda radšej pozrieť na siete s konkrétnejšími kvórovými rezmi, pri ktorých
+to budeme vedieť určiť.
+
+Ďalšou veľkou nevýhodou úplne ľubovoľných kvórových rezov je,
+že už len popísanie týchto kvórových rezov môže byť exponenciálne veľké (od počtu uzov),
+čo nám výrazne ovplyvňuje výpočtovú silu. Preto mierne obmedzíme výber kvórových rezov
+aby ich popis dokázal byť dostatočne krátky a zároveň dosť voľný (nenútil uzlov veriť
+uzlom, ktorým nechcú). Na výmenu budeme o týchto sieťach vedieť lepšie a rýchlejšie
+uvažovať.
+
+\paragraph{NQK-siete} budeme nazývať siete s $N$ uzlami, kde každý uzol $u$ si
+zvolí kvórové rezy tak, že si zvolí $Q_u$ uzlov ktorým verí a jeho kvórové rezy
+budú všetky $K_u$ prvkové podmnožiny týchto $Q_u$ uzlov.
+
+\vspace{4mm}
+V takýchto sieťach je ale jednoduché zistiť \textit{koeficient životaschopnosti}.
+
+\paragraph{Veta}
+Koeficient životaschopnosti \textit{NQK-siete} s množinou uzlou $V$ je
+$\min\limits_{u\in V}(Q_u-K_u+1)$
+
+\paragraph{Dôkaz}Z úvodu podkapitoly vieme, že stačí nájsť pre každý uzol
+najmenšiu množinu, ktorá má aspoň jeden prvok v každom kvórovom reze tohto uzla.
+Zoberme si teda uzol $u$. A označme si množinu uzlov nachádzajúcich sa v aspoň
+jednom jeho kvórovom reze ako $Q$ ($|Q|=Q_u$). Pokiaľ zrejme zlyhá ľubovoľných
+$Q_u-K_u$ uzlov z $Q$, tak stále máme aspoň jeden nepokrytý kvórový rez, keďže v
+\textit{NQK-sieti} každá $K$ prvková podmnožina $Q$ je kvórový rez.
+
+Naopak ak zlyhá $Q_u-K_u+1$ uzlov už neostane žiadna $K$ prvková podmnožina $Q$
+(kvórový rez), ktorá by neobsahovala zlyhaný uzol.
+Podľa úvodu podkapitoly teda máme, že koeficient životaschopnosti siete bude
+minimum zo všetkých týchto výsledkov pre všetky uzly $u$. $\blacksquare$
+
+
+\section {Bezpečnosť}
+
+Tu to bude o niečo náročnejšie
