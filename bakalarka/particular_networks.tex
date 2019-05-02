@@ -1,0 +1,140 @@
+\chapter{Niektoré rýchlo merateľné siete}
+
+Vzhľadom na to, že sme si v minulej kapitole dokázali, že vo všeobecnosti
+je naše metriky ťažké vypočítať, v tejto kapitole sa skúsime pozrieť na niektoré
+konkrétne typy sietí. Pozrieme sa na siete za predpokladu, že by si uzly volili
+kvórové rezy určitým spôsobom a skúsime sa zamyslieť ako veľmi by boli takéto
+siete bezpečné.
+Po analýze niektorých typov dostaneme lepší náhľad do tvorenia kvór a
+kvórových rezov a budeme vedieť popísať niektoré osvedčené postupy na tvorenie
+kvórových rezov aj pre všeobecné siete, tak aby bola jej odolnosť vysoká
+aj keď ju nebudeme vedieť exaktne zrátať.
+
+\section {Reťazové siete}
+
+Najprv si ešte upravíme a zjednodušíme definíciu sietí, ktorými sa budeme zaoberať.
+
+\paragraph{Zjednodušené NQK-siete} sú \textit{NQK-siete}, pre ktoré platí
+$\forall v:\:Q_v=Q\land K_v=K$.
+
+\vspace{3mm}
+\textit{Reťazové siete} budú zjednodušené NQK-siete s nasledujúcou voľbou
+vlastných kvórových rezov:
+
+$$Q(v_i)= \begin{cases}
+            [\{v_0, ..., v_Q\} \setminus \{v_i\}]^K & i < Q \\
+            [\{v_{i-Q}, ..., v_{i-1}\}]^K & inak
+          \end{cases}$$
+
+Pričom uzly sme si očíslovali: $v_0, ..., v_{N-1}$.
+Teda vlastné kvórové rezy uzlov sú ľubovoľné K-prvkové podmnožiny Q uzlov pred ním
+(v zoradení podľa indexov) až na uzly, ktoré nemajú Q uzlov pred sebou, tie
+použijú prvých Q uzlov v zoradení (okrem seba, aby to bol vlastný kvórový rez).
+
+Všimnime si, že tým, že všetky uzly \uv{závisia} na uzloch pred nimi, tak
+každé kvórum v sieti bude musieť obsahovať uzly s nízkym indexom.
+Formálnejšie:
+každý vrchol v kvóre musí mať v kvóre aj jeden zo svojich kvórových rezov
+a teda ak v každom svojom kvórovom reze má uzol s menším indexom, tak
+tento vrchol nemôže byť v žiadom kvóre uzol s najmenším indexom.
+
+V našej sieti, ale jediné uzly s kvórovým rezom neobsahujúcim menšie indexy
+sú uzly $v_0, ..., v_{Q}$, keď sa lepšie zamyslíme dokonca to budú len uzly
+$v_0, ..., v_{Q-K}$, keďže každý kvórový rez obsahuje $K+1$ uzlov.
+Teda ak si označíme uzol s najmenším indexom v kvóre ako $v_i$, tak platí
+$i\leq Q-K$.
+
+Všimnime si ale, že všetky tieto uzly majú kvórové rezy v množine $[\{v_0, ..., v_Q\}]^{K+1}$.
+Čo teda znamená, že každé kvórum reťazovej siete obsahuje ako podmnožinu
+niektorú (K+1)-prvkovú podmnožinu $\{v_0, ..., v_Q\}$.
+Naopak zoberme si jednu (K+1)-prvkovú podmnožina $\{v_0, ..., v_Q\}$ a označme ju $A$.
+Všetky prvky $A$ majú z definície kvórové rezy presne tieto (K+1)-prvkové podmnožiny,
+a teda jeden kvórový rez pre každý prvok je samotná množina $A$. Teda dokonca $A$
+je kvórum.
+
+Ukázali sme teda, že všetky minimálne kvóra v reťazovej siete sú $[\{v_0, ..., v_Q\}]^{K+1}$.
+Ako sme už dokázali v kapitole \ref{kap:security} bezpečnostný koeficient je
+veľkosť ich najmenšieho prieniku.
+
+Máme teda (K+1)-prvkové podmnožiny (Q+1)-prvkovej množiny a hľadáme ich
+najmenší prienik z čoho dostaneme, že bezpečnostný koeficient
+reťazovej siete je\\ $max (0,2K-Q+1)$.
+Keďže reťazová sieť je špeciálnym typom NQK-siete, tak vieme aj
+koeficient životaschopnosti a to je $Q-K+1$.
+
+Teraz vieme povedať sieti ako zvoliť $Q$ a $K$ aby jej koeficient odolnosti bol
+čo najväčší, teda hľadáme $\max\limits_{\forall K,Q} \: \min (2K-Q+1, Q-K+1)$.
+\footnote{bezpečnostný koeficient rovný 0 sme nemuseli zbytočne uvažovať,
+keďže vieme zvoliť $Q,K$ aby $2K-Q+1$ bolo kladné}
+
+Táto funkcia nadobúda maximum pre $K = \frac{2}{3}Q$. A teda najodolnejšie
+reťazové siete majú koreficient odolnosti rovný $\frac{Q}{3}+1$.
+Teda optimum je zvoliť počet uzlov vo vlastných kvórových rezov rovný dvoch
+tretín počtu uzlom ktorým vrchol dôveruje.
+
+\section {Cyklické siete}
+
+Ako bežne, uzly si očíslujme $v_0, ..., v_{N-1}$.
+Keďže siete budú cyklické, často budeme používať pojem po sebe idúce uzly,
+a takými budeme uvažovať aj uzly $v_0$ a $v_{N-1}$.
+Ďalej si zadefinujeme aj intervaly uzlov, ktoré budeme označovať ako
+
+$$<v_a, v_b> = \begin{cases}
+                 \{v_a, ..., v_b\} & a<=b \\
+                 \{v_a, ...,v_{N-1}, v_0,... v_b\} & inak
+               \end{cases}
+$$
+
+Podobne označíme aj (polo)otvorené intervaly, kde len nebudeme uvažovať
+hraničné uzly (tieto môžu byť potencionálne aj prázdne).
+
+\textit{Cyklické siete} budeme označovať \textit{zjednodušené NQK-siete},
+ktorých vlastné kvórové rezy budú definované nasledovne:
+
+$$Q(v_i)= [<v_{(i+1) mod N}, v_{(i+Q) mod N}>]^K$$
+
+Vlastné kvórové rezy sú teda ľubovoľné K-prvkové podmnožiny nasledujúcich $Q$ uzlov
+za daným uzlom (v zoradení podľa indexov),
+pričom indexy uzlov rátame cyklicky, teda modulo počet uzlov v sieti.
+
+Tieto siete sú veľmi podobné už spomínaným \textit{reťazovým} sieťam, avšak
+v nich sme využili, že všetky uzly \uv{záviseli} len na malej množine uzloch
+a tam našli tie podstatné ktoré boli v každom kvóre.
+V tomto type sietí je väčšia decentralizácia, keďže aj uzly s veľkým indexom
+závisia zas na uzloch s malým indexom, takže tu budeme musieť analýzu siete
+urobiť trikovejšie.
+
+\paragraph{Veta}
+Uvažujme $Q$ po sebe idúcich uzlov v cyklickej sieti $A=<v_i, v_{(i+Q) mod N})$.
+Potom v každom jej kvóre je aspoň $K$ uzlov z $A$.
+
+\paragraph{Dôkaz}
+Zoberme si ľubovoľné kvórum $Q_1$ a pre spor predpokladajme, že menej ako
+$K$ uzlov z tohto kvóra je v množine $A$.
+Potom zrejme $v_{(i-1) mod N}\notin Q_1$, keďže všetky jeho vlastné kvórové rezy
+sú K-prvkovou podmnožinou $A$, čo by bol spor.
+Keďže každý kvórový rez má aspoň $K+1$ prvkov, tak existuje uzol $v_j$ taký že
+
+$$v_j\in Q_1\land v_j\notin A\land \forall u\in\: <v_{(j+1) mod N}, v_i)\: :u\notin Q_1$$
+
+Teda \uv{posledný} uzol z kvóra, ktorý je \uv{pred} množinou $A$.
+V $Q_1$ musí ale byť aj niektorý vlastný kvórový rez $v_j$, teda $K$ vrcholov
+z $<v_{(j+1)mod N}, v_{(j+Q) mod N}>$.\\
+Rozlíšime 2 prípady:
+
+\begin{enumerate}
+  \item $v_i\in\: <v_{(j+1) mod N}, v_{(j+Q) mod N}>$
+
+        V takomto prípade platí
+
+        $<v_{(j+1) mod N}, v_{(j+Q) mod N}>\:=\: <v_{(j+1) mod N}, v_i)\: \cup <v_i, v_{(j+Q) mod N}>$.
+
+        Pričom z definície $v_j$ žiadny uzol z $<v_{(j+1) mod N}, v_i)$ nie je v $Q_1$.
+        Teda všetkých $K$ uzlov musí byť z $<v_i, v_{(j+Q) mod N}>\: \subseteq\: <v_i, v_{(i+Q) mod N})$,
+        čo je presne čo sme chceli dokázať.
+  \item $v_i\notin <v_{(j+1) mod N}, v_{(j+Q) mod N}>$
+
+        V takomto prípade $Q_1$ neobsahuje žiadny kvórový rez $v_j$, keďže\\
+        $<v_{(j+1) mod N}, v_{(j+Q) mod N}> \subseteq\: <v_{(j+1) mod N}, v_i$.
+        Čo je spor s tým, že $Q_1$ obsahuje kvórový rez $v_j$ a teda je kvórum.
+\end{enumerate} $\blacksquare$

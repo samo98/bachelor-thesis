@@ -11,9 +11,11 @@ chybám v uzloch.
 
 \paragraph {Bezpečnostný koeficient} Stellar systém $<\textbf{V},\textbf{Q}>$
 má \textit{bezpečnostný koeficient} rovný $k$,
-kde $k$ je najmenšie prirodzené číslo také, že existuje $k$ prvková množina
+kde $k$ je najmenšie nezáporné číslo také, že existuje $k$ prvková množina
 uzlov $B \in V$ pre ktorú platí, že $<\textbf{V}, \textbf{Q}>^B$ nie je
-\textit{bezpečný}.
+\textit{bezpečný}.\\
+Ak také $k$ neexistuje (systém má prienik kvór nech odoberieme
+ľubovoľnú množinu uzlov), tak si tento koeficient dodefinuje ako $|V|$.
 
 \vspace{4mm}
 Inými slovami: v sieti musí zlyhať aspoň $k$ uzlov aby sieť prestala byť
@@ -23,13 +25,16 @@ Naopak sieť dokáže prežiť aj napriek zlyhaniu $k-1$ ľubovoľných uzlov a 
 jeden uzol dodržujúci protokol nebude divergovať.
 Samozrejme máme tu špeciálny prípad keď $k=0$, vtedy už samotná sieť nie je
 \textit{bezpečná}.
+V prípadoch keď je sieť dokonale bezpečná, teda odolná voči zlyhaniu ľubovoľnej
+množiny uzlov si dodefinujeme koeificient na počet uzlov v systéme, keďže ak
+už zlyhajú všetky uzly nemá žiadny ďalší zmysel merať bezpečnosť siete.
 
 Podobne si vieme definovať koeficient pre životaschopnosť.
 
 \paragraph {Koeficient životaschopnosti} Stellar systém $<\textbf{V},\textbf{Q}>$,
 má \textit{koeficient životaschopnosti} rovný $k$, kde $k$ je najmenšie prirodzené
 číslo také, že existuje $k$ prvková množina uzlov $B \in V$ pre ktorú platí, že
-$<\textbf{V}, \textbf{Q}>^B$ nie je \textit{životaschopná}.
+množina uzlov $V \setminus B$ v tomto Stellar systéme nie je \textit{životaschopná}.
 
 \vspace{4mm}
 V sieti musí zlyhať aspoň $k$ uzlov aby sieť prestala byť
@@ -37,13 +42,14 @@ V sieti musí zlyhať aspoň $k$ uzlov aby sieť prestala byť
 \textit{nepotrebná}, konkrétne porušuje druhú podmienku \textit{nepotrebnej množiny}.
 Naopak sieť dokáže prežiť aj napriek zlyhaniu $k-1$ ľubovoľných uzlov a všetky uzly
 budú schopné sa ďalej podieľať na prijímaní konsenzu.
-Špeciálny prípad keď $k=0$, znamená, že už samotná sieť nie je \textit{životaschopná}.
+Špeciálny prípad $k=0$ zrejme nemôže nastať, keďže
+$\textbf{V} \setminus \emptyset = \textbf{V}$ je kvórum v $<\textbf{V},\textbf{Q}>$.
 
 Na záver si zadefinujeme koeficient, ktorý nám bude zaručovať obe podmienky spomenuté
 vyššie. To čo si totiž môžeme uvedomiť je, že pokiaľ náš \textit{bezpečnostný koeficient}
 je $k$, tak síce žiadne uzly dodržujúce protokol sme \uv{nestratili} v zmysle, že
-neschvaľujú protichodné bloky aj keď teda $k$ uzlov zlyhalo. Napriek tomu táto
-množina $k$ uzlov nemusí byť nepotrebná, keďže môže porušovať druhú podmienku a teda
+neschvaľujú protichodné bloky aj keď teda $k-1$ uzlov zlyhalo. Napriek tomu táto
+množina $k-1$ uzlov nemusí byť nepotrebná, keďže môže porušovať druhú podmienku a teda
 niektoré uzly mohli prestať byť schopné podieľať sa na schvaľovaní blokov.
 Podobne to funguje naopak pri \textit{koeficiente životaschopnosti}.
 
@@ -61,31 +67,29 @@ aj nemusí, keďže tiež záleží, ktoré konkrétne uzly zlyhajú.
 \section {Životaschopnosť}
 
 Skúsme sa najprv zamerať na vyhodnocovanie metriky životaschopnosti siete.
-V tomto prípade hľadáme najmenšiu (počtom prvkov) množinu uzlov $B$, ktorými
-pokazíme životaschopnosť siete, teda, že bez nich už ostatné uzly nebudú
-tvoriť kvórum v pôvodnom systéme.
+V tomto prípade hľadáme najmenšiu (počtom prvkov) množinu uzlov $B$ takú, že
+systém už nebude životaschopný aj \textit{napriek množine B}.
+Teda, že bez uzlov z $B$ už ostatné uzly nebudú tvoriť kvórum v pôvodnom systéme.
 Z definície kvóra vieme ale túto úlohu preformulovať. Kvórum musí obsahovať
 aspoň jeden kvórový rez každého jeho prvku.
 Je to teda ekvivalentné nájdeniu takého $B$, že niektorý uzol dodržujúci protokol
-bude mať v každom kvórovom reze aspoň jeden prvok $B$.
+bude mať v každom \textit{vlastnom kvórovom reze} aspoň jeden prvok $B$.
 Vtedy budeme hovoriť, že tento uzol prestal byť \textit{životaschopný}.
 Nájsť takéto $B$ môžme ale pre každý vrchol zvlášť a potom pre sieť stačí vybrať
 minimálne $B$. Veľkosť takéhoto minimálneho $B$ bude potom náš \textit{koeficient
 životaschopnosti}.
 
 Chceme teda nájsť takú najmenšiu množinu uzlov $B$, že pre uzol $u$ a pre každý
-jeho kvórový rez platí, že aspoň jeden jeho prvok je z $B$.
-Toto je však známy problém pokrytia množín (angl. \textit{set cover problem}),
-kde prvky sú všetky uzly nachádzajúce sa v ľubovoľnom kvórovom reze $u$.
-Množiny ktoré chceme pokryť sú kvórové rezy a teda hľadáme najmenšiu množinu,
-ktorá tieto množiny pokryje.
+jeho vlastný kvórový rez platí, že aspoň jeden jeho prvok je z $B$.
+Toto je však známy problém pokrytia množín (angl. \textit{set cover problem})
+\cite{karp1972reducibilitysetcover},
+kde prvky sú všetky uzly nachádzajúce sa v ľubovoľnom vlastnom kvórovom reze $u$.
+Množiny ktoré chceme pokryť sú vlastné kvórové rezy
+a teda hľadáme najmenšiu množinu, ktorá tieto množiny pokryje.
 O tomto probléme je známe, že je NP-úplný, čo nám teda hovorí, že tento koeficient
 vo všeobecnosti nebudeme vedieť rýchlo zistiť, aj keď na tento problém existujú
 rôzne rýchle a rôzne dobré aproximačné algoritmy, ktoré by nám pomohli aspoň
 približne určiť koľko zlyhaným uzlov naša sieť prežije.
-
-Poďme sa teda radšej pozrieť na siete s konkrétnejšími kvórovými rezmi, pri ktorých
-to budeme vedieť určiť.
 
 Ďalšou veľkou nevýhodou úplne ľubovoľných kvórových rezov je,
 že už len popísanie týchto kvórových rezov môže byť exponenciálne veľké (od počtu uzov),
@@ -94,9 +98,15 @@ aby ich popis dokázal byť dostatočne krátky a zároveň dosť voľný (nenú
 uzlom, ktorým nechcú). Na výmenu budeme o týchto sieťach vedieť lepšie a rýchlejšie
 uvažovať.
 
+Poďme sa teda radšej pozrieť na siete s konkrétnejšími kvórovými rezmi, pri ktorých
+to budeme vedieť určiť.
+
 \paragraph{NQK-siete} budeme nazývať siete s $N$ uzlami, kde každý uzol $u$ si
-zvolí kvórové rezy tak, že si zvolí $Q_u$ uzlov ktorým verí a jeho kvórové rezy
-budú všetky $K_u$ prvkové podmnožiny týchto $Q_u$ uzlov.
+zvolí kvórové rezy tak, že si zvolí $Q_u$ uzlov ktorým verí a jeho vlastné kvórové rezy
+budú všetky $K_u$ prvkové podmnožiny týchto $Q_u$ uzlov\footnote{Kvórové rezy
+vyrobíme z vlastných kvórových rezov tak, že ku každému z nich pridáme uzol, ktorému
+tieto kvórové rezy patria}.
+Samozrejme máme prirodzené predpoklady na sieť, teda $Q_u \leq N$ a $1\leq K_u\leq Q_u$
 
 \vspace{4mm}
 V takýchto sieťach je ale jednoduché zistiť \textit{koeficient životaschopnosti}.
@@ -106,18 +116,199 @@ Koeficient životaschopnosti \textit{NQK-siete} s množinou uzlou $V$ je
 $\min\limits_{u\in V}(Q_u-K_u+1)$
 
 \paragraph{Dôkaz}Z úvodu podkapitoly vieme, že stačí nájsť pre každý uzol
-najmenšiu množinu, ktorá má aspoň jeden prvok v každom kvórovom reze tohto uzla.
+najmenšiu množinu, ktorá má aspoň jeden prvok v každom vlastnom kvórovom reze
+tohto uzla.
 Zoberme si teda uzol $u$. A označme si množinu uzlov nachádzajúcich sa v aspoň
-jednom jeho kvórovom reze ako $Q$ ($|Q|=Q_u$). Pokiaľ zrejme zlyhá ľubovoľných
-$Q_u-K_u$ uzlov z $Q$, tak stále máme aspoň jeden nepokrytý kvórový rez, keďže v
-\textit{NQK-sieti} každá $K$ prvková podmnožina $Q$ je kvórový rez.
+jednom jeho vlastnom kvórovom reze ako $Q$ ($|Q|=Q_u$). Pokiaľ zrejme zlyhá
+ľubovoľných $Q_u-K_u$ uzlov z $Q$, tak stále máme aspoň jeden nepokrytý
+vlastný kvórový rez, keďže v \textit{NQK-sieti} každá $K_u$ prvková podmnožina
+$Q$ je vlastný kvórový rez.
 
 Naopak ak zlyhá $Q_u-K_u+1$ uzlov už neostane žiadna $K$ prvková podmnožina $Q$
-(kvórový rez), ktorá by neobsahovala zlyhaný uzol.
+(vlastný kvórový rez), ktorá by neobsahovala zlyhaný uzol.
 Podľa úvodu podkapitoly teda máme, že koeficient životaschopnosti siete bude
 minimum zo všetkých týchto výsledkov pre všetky uzly $u$. $\blacksquare$
 
-
 \section {Bezpečnosť}
 
-Tu to bude o niečo náročnejšie
+\label{kap:security}
+
+Tentokrát sa pozrieme na metriku bezpečnosti siete. V tomto prípade sa snažíme
+nájsť najmenšiu množinu, ktorá poruší prienik kvór v systéme. Čo sa dá preformulovať
+na problém hľadania najmenšieho prieniku dvoch ľubovoľných kvór. Veľkosť tohoto
+prieniku bude náš \textit{bezpečnostný koeficient} (pokiaľ v sieti existujú aspoň 2 kvóra,
+ináč nastane špeciálny prípad z definície a koeficient bude počet uzlov v sieti).
+Totiž stačí uvažovať práve množinu uzlov obsahujúcu práve tento prienik a tieto
+dve kvóra po odstránení tejto množiny už prienik mať nebudú a teda celá sieť o túto
+vlastnosť príde.
+Keďže je to ale najmenší prienik, tak uvažovaním množiny menšieho počtu prvkov
+nikdy neobsiahne celý prienik a teda aj po ich odstránení všetky prieniky ostanú.
+
+Dokonca platí trošku príjemnejšie pravidlo, ak si zadefinujeme nasledovný pojem.
+
+\paragraph {Minimálne kvórum} je také kvórum, že žiadna jeho vlastná podmnožina
+už nie je kvórum.
+
+\vspace{3mm}
+\textit{Bezpečnostný koeficient} je dokonca veľkosť najmenšieho prieniku dvoch
+ľubovoľných minimálnych kvór, keďže ak máme kvóra $Q_3\subseteq Q_1$ a $Q_4\subseteq Q_2$,
+tak zjavne $|Q_3\cap Q_4|\leq |Q_1\cap Q_2|$.
+
+\vspace{4mm}
+Najprv si ukážeme, že pokiaľ nedáme žiadne obmedzenia na výber kvórových rezov,
+tak zistenie nášho bezpečnostného koeficientu bude NP-ťažký problém, ba čo viac
+dokonca len zistenie či náš koeficient je aspoň 1 bude NP-ťažké.
+Dokážeme to redukciou nášho problému na známy NP problém, ktorým bude SAT
+\cite{cook1971complexity}.
+
+SAT je rozhodovací problém. Na vstupe má booleovskú formulu v konjuktívnej normálnej
+forme a úlohou algortimu je rozhodnúť, či existuje ohodnotenie premenných vo formule,
+pri ktorom je vstupná formula splnená.
+
+\paragraph{Veta}
+Ak by sme vedeli zistiť v polynomiálnom čase pre daný Stellar systém, či má bezpečnostný
+koeficient 0 (či existujú kvóra bez prieniku), tak by sme vedeli
+v polynomiálnom čase zistiť či má SAT riešenie.
+
+\paragraph{Dôkaz}
+Majme teda na vstupe booleovskú formulu $X_1 \land X_2 ... \land X_m$, kde každé\\
+$X_i = z_{i,1} \lor z_{i,2} ... \lor z_{i,p_i}$, kde
+$z_{i,j} \in \{x_1, ..., x_n, \neg x_1, ..., \neg x_n\}$, teda máme konjuktívnu
+normálnu formu z premenných $x_i$ a $\neg x_i$.
+
+Teraz zostrojíme Stellar systém $<\textbf{V},\textbf{Q}>$, taký, že táto formula
+je splniteľná práve vtedy keď zostrojený systém bude mať bezpečnostný koeficient 0.
+Množina uzlov bude
+$V=\{v_1, ...,v_{2n+1}, v_{1,1}, ..., v_{2n+1,m}, w_{1,1}, ..., w_{2n+1,n}\}$.
+
+Aby sme nemuseli rozlišovať prípady premenných v pozitívnom a negatívnom
+kontexte, tak $v_1, ..., v_n$ budú zodpovedať premenným v pozitívnom kontexte
+($x_i$) a uzly $v_{n+1}, ..., v_{2n}$ premenným v negatívnom kontexte
+($\neg x_{i-n}$) a napokon tu budeme mať špeciálny uzol $v_{2n+1}$.
+
+Potom budeme mať uzly $v_{i,j}$, ktoré budú symbolizovať klauzulu $X_j$
+a pre každý uzol ($v_k$) budeme mať kópiu (teda dokopy $2n+1$ kópií). Prečo potrebujeme
+pre každý uzol ($v_k$) vlastnú kópiu uzla pre každú klauzulu, uvidíme pri zostrojovaní
+kvórovej funkcie.
+Samotnú redukciu by sme dokázali spraviť aj bez nich, no potrebovali by sme
+príliš veľa kvórových rezov a redukcia by už nebola polynomiálna.
+
+Napokon nám ostali špeciálne uzly $w_{i,j}$, ktorými sa budeme snažiť zabezpečiť
+aby splniteľnosť formuly naozaj zodpovedala našej sieti a budeme ho používať
+na to aby sme zabezpečili neaký vzťah medzi $x_j$ a $\neg x_j$ a zas budeme mať
+pre každý uzol reprezentujúci pôvodnú premennú vlastnú kópiu.
+
+Kvórovú funkciu zostrojíme nasledovne:
+
+\vspace{5mm}
+$\hfill Q(v_i)=\{\{v_{i,1}, ..., v_{i,m}, w_{i,1}, ..., w_{i,n}\}\}\hfill$
+
+$\hfill Q(v_{i,j})=\{\{v_k\} | x_k\in X_j\}\cup \{\{v_{k+n}\} | \neg x_k\in X_j\}\cup \{\{v_{2n+1}\}\}\hfill$
+
+$\hfill Q(w_{i,j})=\{\{v_j\}, \{v_{j+n}\}\} \hfill$
+
+\vspace{5mm}
+To znamená, že všetky uzly $v_i$ majú jediný kvórový rez a to množinu
+všetkých svojich zodpovedajúcich kópií všetkých klauzúl (plus špeciálne uzly
+$w_{i,j}$).
+Naopak všetky uzly zodpovedajúce niektorej inštancii klauzuly majú 1-prvkové
+kvórové rezy. V nich uzly, ktoré zodpovedajú premenným (výskyt premennej v klauzule
+sme zapísali symbolicky množinovým zápisom), ktoré sa v klauzule
+nachádzajú (a špeciálny vrchol $v_{2n+1}$).
+Na záver špeciálne uzly $w_{i,j}$ majú len 2 kvórové rezy a to uzly
+reprezentujúce premennú $x_j$ a jej negáciu (zase ako pre klauzuly máme $2n+1$ kópií
+pre každú premennú).
+
+Sieť už máme skonštruovanú a zjavne táto redukcia sa dá spraviť polynmiálne,
+keďže uzlov máme $(2n+1)(m+n+1)$ a každý uzol má najviac $n+1$ kvórových rezov
+(presnejšie počet premenných v klauzule +1) a každý kvórový rez má veľkosť
+najviac $m$. Teraz ostáva ukázať, že naozaj v tejto sieti existujú 2 kvóra bez
+prienikov práve vtedy keď je booleovská formula splniteľná.
+
+Najprv ukážeme, že ak booleovská formula je splniteľná, tak existujú 2 kvóra
+bez prieniku.
+Uvažujme jedno vhodné ohodnotenie premenných. Vytvorme si množinu\\
+$A=\{i | x_i=1\}\cup \{n+i | x_i=0\}$. $A$ je vlastne množina indexov uzlov,
+ktoré reprezentujú kladne ohodnotené premenné v našom ohodnotení.
+Označme $A'$ ako doplnok $A$ do množiny všetkých platných indexov, teda
+$A'=\{1,2,..., 2n+1\} \setminus A$.
+
+Potom
+$$\mathbf{Q_1}=\{v_a | a\in A\}\cup \{v_{a,j} | a\in A\}\cup \{w_{a,j} | a\in A\}$$
+je kvórum.
+
+Zrejme $v_a$ majú svoj jediný kvórový rez v $Q_1$ ($v_{a,j}, w_{a,j}$ pre všetky $j$).
+Podobne aj $w_{a,j}$ tu má kvórový rez, keďže $Q_1$ obsahuje práve jeden
+prvok z dvojice $v_i$ a $v_{n+i}$ (buď je $x_i$ ohodnotené 0 alebo 1).
+A napokon aj kvórový rez $v_{a,j}$ je v $Q_1$, keďže
+ak je formula splnená aspoň jeden literál klauzuly $X_j$ musí byť pravdivý a
+naša množina obsahuje všetky uzly zodpovedajúce pravdivým literálom (ak bolo
+$x_i$ pravdivé obsahujeme $v_i$, ináč obsahujeme $v_{n+i}$).
+Teda $Q_1$ je naozaj kvórum.
+
+Ukážeme, že aj
+$$\mathbf{Q_2}=\{v_a | a\in A'\}\cup \{v_{a,j} | a\in A'\}\cup \{w_{a,j} | a\in A'\}$$
+je kvórum.
+
+Podobne ako v $Q_1$, množina obsahuje aspoň jeden kvórový rez uzlov $v_a$ a $w_{a,j}$.
+\\
+Keďže $v_{2n+1}\in Q_2$ a takisto aj $v_{2n+1}\in Q(v_{a,j})$, tak aj $Q_2$ je kvórum.
+Tieto kvóra ale nemajú prienik, keďže $A$ a $A'$ nemajú.
+
+Ostáva teda ukázať, že ak v našom systéme existujú 2 kvóra $Q_1$ a $Q_2$ bez prieniku,
+tak naša formula je splniteľná.
+
+Poskupinkujme všetky uzly podľa prvého indexu, tieto skupinky označme
+
+$$\mathbf{V_i}=\{v_i, v_{i,1}, ..., v_{i,m}, w_{i,1}, ..., w_{i,n}\}$$.
+
+Všimnime si, že ak je v neakom kvóre $v_i$, tak potom aj celé $V_i$
+($v_i$ má jediný kvórový rez).
+
+Naopak ak je v kvóre iný uzol tejto skupiny a $v_i$ v kvóre nie je,
+tak aj po odobratí tohto uzlu z kvóra, sa kvórum zachová, kedže $v_i$ je jediný uzol,
+ktorý má ostatné uzly v skupine vo svojom kvórovom reze.
+
+Preto pre jednoduchosť uvažujme kvóra $Q_1$ a $Q_2$, ktoré obsahujú iba celé skupiny $V_i$.
+Toto môžeme spraviť keďže ako sme ukázali vyššie, stačí skúmať prieniky minimálnych kvór.
+
+Bez ujmy na všeobecnosti nech $Q_1$ je kvórum neobsahujúce špeciálnu skupinu
+$V_{2n+1}$ (keďže sú bez prieniku jedno z nich túto vlastnosť má).
+
+Ohodnoťme premenné vo formule nasledovne:
+
+$$x_i= \begin{cases}
+            1 & V_i \subseteq Q_1 \\
+            0 & V_{i+n} \subseteq Q_1
+       \end{cases}$$
+
+\vspace{5mm}
+Všimnime si, že každá premenná je definovaná, keďže každé kvórum obsahuje skupinu
+$V_i$ alebo $V_{i+n}$.
+Totiž, každá skupina ($V_j$) obsahuje uzol $w_{j,i}$, ktorej jediné
+kvórové rezy sú $\{v_i\}$ a $\{v_{i+n}\}$ a teda potom už nutne kvórum obsahuje
+celú skupinu $V_i$ alebo celú skupinu $V_{i+n}$.
+
+Avšak $Q_1$ a $Q_2$ nemajú prienik a keďže obe obsahujú aspoň jednu zo skupín $V_i$
+a $V_{i+n}$, tak každé z nich obsahuje dokonca práve jednu skupinu a teda je ohodnotenie
+premenných aj dobre definované.
+
+Na záver ukážeme, že formula je splnená.
+Keďže $Q_1 \neq \emptyset$, tak obsahuje skupinu $V_i$ pre neaké $i$
+a teda aj uzly $v_{i,1}, ..., v_{i,m}$.
+Tieto uzly ale majú také kvórové rezy, že naše kvórum musí obsahovať aj uzly
+z každej klauzuly $X_1, ..., X_m$.
+Teda naozaj ak sú v našom systéme 2 kvóra bez prieniku pôvodná formula je
+splniteľná. $\blacksquare$
+
+\vspace{5mm}
+Počas písania našej práce bol do predtlače publikovaný článok\cite{lachowski2019},
+ktorý dokázal rovanký výsledok. Dokonca ho na záver jednoduchou úvahou zosilnil
+na tvrdenie, že už len zistiť či bezpečnostný koeficient siete je 0
+v sieťach s najviac 2 kvórovými rezmi a 2 prvkami v kvórovom reze je NP-ťažké.
+
+Môžeme si všimnúť, že naša redukcia dokonca používala \textit{NQK-sieť} definovanú v predošlej
+podkapitole. Preto nebudeme vedieť rýchlo zisťovať tento koeficient ani v týchto sieťach
+aj keď koeficient životaschopnosti zistiť vieme.
+Budeme sa teda snažiť ešte viac spresniť pravidlá na výber kvórových rezov,
+aby sme tento koeficient vedeli presne vyrátať a tak vedeli aj niečo o danej sieti povedať.
