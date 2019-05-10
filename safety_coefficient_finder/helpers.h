@@ -1,3 +1,6 @@
+#ifndef SAFETY_COEFFICIENT_FINDER_HELPERS_H
+#define SAFETY_COEFFICIENT_FINDER_HELPERS_H
+
 #include <iostream>
 #include <vector>
 
@@ -18,7 +21,7 @@ bool hasQuorumSlice(pair<int, vector<int> > &X, int set) {
     return X.first <= isInQuorum;
 }
 
-void printQuorum(int N, int set) {
+vector<int> intToQuorum(int N, int set){
     vector<int> quorum;
 
     for (int j = 0; j < N; j++) {
@@ -27,6 +30,10 @@ void printQuorum(int N, int set) {
         }
     }
 
+    return quorum;
+}
+
+void printQuorum(vector<int> quorum) {
     cout <<quorum.size()<<endl;
 
     cout <<quorum[0];
@@ -35,3 +42,6 @@ void printQuorum(int N, int set) {
 
     cout << endl;
 }
+
+
+#endif //SAFETY_COEFFICIENT_FINDER_HELPERS_H
