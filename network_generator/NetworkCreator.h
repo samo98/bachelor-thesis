@@ -1,5 +1,5 @@
-#ifndef GENERATOR_SIETI_NETWORKCREATOR_H
-#define GENERATOR_SIETI_NETWORKCREATOR_H
+#ifndef NETWORK_GENERATOR_NETWORKCREATOR_H
+#define NETWORK_GENERATOR_NETWORKCREATOR_H
 
 #include <string>
 #include <stdexcept>
@@ -8,6 +8,9 @@
 using namespace std;
 
 class NetworkCreator {
+    private:
+        CreatingStrategy *strategy;
+
     public:
         NetworkCreator () {
             strategy = nullptr;
@@ -20,21 +23,17 @@ class NetworkCreator {
                 strategy = new ChainStrategy();
             else if (networkType == "random")
                 strategy = new RandomStrategy();
-            else if (networkType == "bichain")
-                strategy = new BiChainStrategy();
-            else if (networkType == "bicyclic")
-                strategy = new BiCyclicStrategy();
             else
                 throw invalid_argument("Unknown network type!");
         }
 
-        void create(int N, int Q, int K){
-            strategy->createNetwork(N, Q, K);
-        }
+        void create(int N, int Q, vector<vector<int> > &quorumSlices){
+            if(Q>=N) throw invalid_argument("Q should be less than N");
 
-    private:
-        CreatingStrategy *strategy;
+            quorumSlices.resize(N);
+            strategy->createNetwork(N, Q, quorumSlices);
+        }
 };
 
 
-#endif //GENERATOR_SIETI_NETWORKCREATOR_H
+#endif //NETWORK_GENERATOR_NETWORKCREATOR_H
