@@ -2,5 +2,42 @@
 \addcontentsline{toc}{chapter}{Záver} % rucne pridanie do obsahu
 \markboth{Záver}{Záver} % vyriesenie hlaviciek
 
-Zhrnutie dosiahnutých výsledkov vo vzťahu k stanoveným cieľom a námety na ďalšiu prácu.
+V tejto práci sme si v úvode predstavili problematiku dosahovania konsenzu,
+ukázali sme si ako využiť riešenie tohto problému vo finančnej sieti, kde
+často musíme rišiť podobné problémy a rátať s nedôveryhodnými entitami v sieti.
+Tiež sme si zhrnuli nedostatky existujúcej finančnej siete a takisto doteraz
+známych protokolov, ktoré využívali na vykonávanie transakcií konsenzus
+alebo aj iné metódy, ktoré sú medzi dnešnými kryptomenami populárnejšie.
 
+Následne sme si predstavili samotný Stellar konsenzus protokol a porovnali sme
+ho s už predstavenými inými metódami a ukázali si, ktoré problémy iných metód
+rieši. Pri vylepšení samotného problému konsenzu išlo o zbavenie sa centrálnej
+autority pri vstupe novej entity do siete.
+Zoznámili sme sa so samotným fungovaním Stellar konsenzus protokolu a zistili
+sme podmienky pri ktorých sieť dokáže odolávať útočníkom.
+
+Sformulovali sme si presnejšie metriky na hodnotenie siete podľa toho koľko
+zlyhaní uzlov ju nedokáže ovplyvniť. Dokázali sme si, že pre všeobecné siete
+je zisťovanie týchto metrík NP-ťažký problém a teda sme si spresnili model
+siete aby sme vedeli o sieti a jej odolnosti povedať aspoň niečo.
+
+Vybrali sme si niektoré konkrétne modely sietí zrátali ich metriky a dostali
+lepší vhľad do závislosti typu siete a jej odolnosti. Dokonca aj našli
+štruktúru siete pri ktorej odolnosť dosahuje čo najväčšie hodnoty.
+
+Na záver sme sa pozreli na to ako by dopadla odolnosť siete ak by boli siete
+vytvorené náhodne. Najprv pri malých sieťach, kde sme metriky vedeli vypočítať
+presne a potom aj na väčších kde sme však dokázali tieto metriky vypočítať
+len približne.
+
+Štatistiky z vybraných typov sietí a neskôr aj z náhodných sietí ukazujú, že
+dokážeme získať odolnosť voči zlyhaniu až $\frac{1}{3}$ entít, čím sa dokážeme
+porovnávať aj s centralizovanou verziou protokolov na konsenzus. Zistili sme,
+že takúto vysokú odolnosť dosahujeme keď konkrétna entita je ochotná nechať sa
+presvedčiť okolo $\frac{2}{3}$ entitami, ktorým dôveruje.
+
+Napriek tomu sme dokázali analyzovať len siete s počtom entít do $50$, čo
+nám dáva veľký prietor na zlepšenie. Takisto naša metóda pri väčších sieťach
+nemusela byť veľmi presná a už len lepšie zrátať jej presnosť a tak zlepšiť
+odhady našich metrík môže dať oveľa lepší pohľad do bezpečnosti a životaschopnosti
+sietí založených na Stellar konsenzus protokole.

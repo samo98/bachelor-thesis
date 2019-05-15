@@ -2,5 +2,34 @@
 \addcontentsline{toc}{chapter}{Úvod} % rucne pridanie do obsahu
 \markboth{Úvod}{Úvod} % vyriesenie hlaviciek
 
-V úvode opíšeme cieľ a obsah problematiky. Ukážeme,
-prečo je práca dôležitá a prečo sme sa rozhodli venovať práve tejto téme.
+V posledných rokoch nadobudli kryptomeny na popularite a výskum v tejto
+oblasti sa raketovým tempom začal posúvať. Dnes už máme tisícky rôznych
+kryptomien, z ktoých každá svojím spôsobom vylepšuje dnešnú existujúcu
+finančnú sieť. Najväčším prínosom je schopnosť prevodu peňazí bez
+centrálnej autority, no aj tak tu ostalo mnoho výziev, ktorými by sme
+dokázali zlepšiť aktuálne podmienky v sieťach jednotlivých kryptomien.
+
+My sme sa rozhodli bližšie sa pozrieť na kryptomenu Stellar. Pre túto
+kryptomenu bol pred 3 rokmi vyvinutý nový konsenzus protkol. Tento
+protokol mal za úlohu zachovať všetky dobré vlastnosti doteraz vyvinutých
+protokolov, zrýchliť peňažné transakcie a najmä zabezpečiť otvorené
+členstvo pre nové entity, ktoré sa chcú do siete pridať. Poslednú vlastnosť
+dovtedy žiadny konsenzus protokol bez centrálnej autority zabezpečiť nevedel.
+
+Jednou z dôležitých vlastností Stellar konsenzus protokolu je, že dokáže sa
+vysporiadať aj so zlyhaním niekoľkých entít a udržať sieť bez poškodenia
+schopnú naďalej vykonávať transakcie.
+Koľko takýchto zlyhaní však vie sieť prežiť závisí od rôznych parametrov siete
+a dodnes nie je známe ako rýchlo vieme pre konkrétnu sieť zistiť tento počet.
+
+V našej práci si najprv predstavíme jednotlivé vlastnosti, ktoré od protokolu
+budeme očakávať a následne si predstavíme samotný Stellar konsenzus protokol.
+Potom si zadefinujeme jednotlivé metriky podľa ktorých budeme merať odolnosť
+siete voči zlyhaniam a ukážeme, že zmerať tieto metriky vo všeobecnosti
+nebudeme vedieť určiť v polynomiálnom čase od veľkosti popisu siete.
+Následne sa preto pozrieme na konkrétnejšie typy sietí kde tieto metriky
+budeme vedieť určiť a dostaneme lepší pohľad na závislosť metrík od stavby siete.
+Na záver rozanalyzujeme koľko zlyhaní dokážu zhruba prežiť náhodné siete.
+A vyvinieme odporúčanie ako nastaviť niektoré parametre a pravidlá aby
+sieť mohla očakávať, že v priemernom prípade bude schopná prežiť čo najväčší
+počet zlyhaných entít.

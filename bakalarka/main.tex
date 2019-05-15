@@ -9,7 +9,14 @@
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage[slovak]{babel}
+\usepackage{lmodern}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \linespread{1.25}
+
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmus}
+\makeatother
 
 % -------------------
 % --- Definicia zakladnych pojmov
@@ -118,13 +125,14 @@ Fakulta matematiky, fyziky a informatiky
 %   Poďakovanie - nepovinné
 % -------------------
 \setcounter{page}{3}
-\newpage 
-~
+\newpage
 
-\vfill
-{\bf Poďakovanie:} Tu môžete poďakovať školiteľovi, prípadne
-ďalším osobám, ktoré vám s prácou nejako pomohli, poradili,
-poskytli dáta a podobne.
+\begin{flushleft}\textbf{\Large Poďakovanie}\end{flushleft}
+Chcel by som sa poďakovať môjmu školiteľovi RNDr. Tomášovi Kulichovi, PhD.
+za návrh témy a podpory v objavovaní pre mňa nového sveta kryptomien.
+
+Rovnako Patrikovi Bakovi za skvelé rady, postrehy a najmä možnosti
+vyrozprávania sa o nástrahách čakajúcich v priebehu vyhotovovania práce.
 
 % --- Koniec poďakovania
 
@@ -134,13 +142,23 @@ poskytli dáta a podobne.
 \newpage 
 \section*{Abstrakt}
 
+Kryptomena Stellar pred pár rokmi prešla na nový protokol, ktorý má vylepšovať
+doteraz známe konsenzus protokoly najmä zjednodušením možnosti vstupu do siete
+pre novú entitu.
+Táto práca analyzuje odolnosť tohto protokolu voči zlyhaniam jednotlivých
+entít spolupracujúcich na konsenze. Najprv ukáže, že pre danú sieť nevieme
+v polynomiálnom čase povedať pri koľkých zlyhaniach bude sieť stále bezpečná
+a ani pri koľkých zlyhaniach bude sieť stále schopná dohodnúť sa na konsenze.
+Neskôr sa pozrie na niektoré zaujímavé typy sietí pri ktorých odolnosť vyjadriť
+vieme.
+Vytvorí algoritmus na presné vyjadrenie odolnosti, respektíve rýchlejší
+algoritmus na odhady zhora pre odolnosť siete.
+Na záver rozanalyzuje bezpečnosť a odolnosť náhodne vytvorených sietí.
+Túto analýzu ukončí odporúčaním volenia parametrov siete aby bola sieť schopná
+prežiť čo najviac zlyhaní.
 
-Slovenský abstrakt v rozsahu 100-500 slov, jeden odstavec. Abstrakt
-stručne sumarizuje výsledky práce. Mal by byť pochopiteľný pre bežného
-informatika. Nemal by teda využívať skratky, termíny alebo označenie
-zavedené v práci, okrem tých, ktoré sú všeobecne známe.
-
-\paragraph*{Kľúčové slová:} jedno, druhé, tretie (prípadne štvrté, piate)
+\paragraph*{Kľúčové slová:} Stellar konsenzus protokol, byzantínske chyby,
+kvórum, odolnosť siete
 % --- Koniec Abstrakt - Slovensky
 
 
@@ -150,11 +168,25 @@ zavedené v práci, okrem tých, ktoré sú všeobecne známe.
 \newpage 
 \section*{Abstract}
 
-Abstract in the English language (translation of the abstract in the
-Slovak language).
+A few years ago, cryptocurrency Stellar has switched to a new protocol
+to improve the consensus protocols known so far. In particular by simplifying
+network entry for a new entity.
+This thesis analyzes the resilence of this protocol to Byzantine failures.
+Firstly it shows impossibility to evaluate number of failures the network is
+still safe or the number of failures, the network can still agree on consensus in
+polynomial time.
+Later, it considers some interesting types of networks in which we are able
+to calculate resilence.
+It creates algorithm to accurately express resilence, or even faster method
+for estimating network resilence quickly.
+At the end it analyzes security and resilence of randomly created networks.
+This analysis ends with recommendations for choosing network parameters to
+make resilence as high as possible.
 
 
-\paragraph*{Keywords:} 
+
+\paragraph*{Keywords:}  Stellat consensus protocol, Byzantine failures,
+quorum, network resilence
 
 % --- Koniec Abstrakt - Anglicky
 
@@ -227,8 +259,9 @@ Slovak language).
 \nocite{*}
 \clearpage
 
+\addcontentsline{toc}{chapter}{Literatúra} % rucne pridanie do obsahu
 \bibliographystyle{plain}
-\bibliography{literatura} 
+\bibliography{literatura}
 
 %Prípadne môžete napísať literatúru priamo tu
 %\begin{thebibliography}{5}
@@ -251,9 +284,8 @@ Slovak language).
 %--- Prilohy---
 % -------------------
 
-%Nepovinná časť prílohy obsahuje materiály, ktoré neboli zaradené priamo  do textu. Každá príloha sa začína na novej strane.
-%Zoznam príloh je súčasťou obsahu.
-%
+\input attachments.tex
+
 %\addcontentsline{toc}{chapter}{Appendix A}
 %\input AppendixA.tex
 %

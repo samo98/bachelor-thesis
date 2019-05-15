@@ -46,9 +46,9 @@ $i\leq Q-K$.
 
 Všimnime si ale, že všetky tieto uzly majú kvórové rezy v množine $[\{v_0, ..., v_Q\}]^{K+1}$.
 Čo teda znamená, že každé kvórum reťazovej siete obsahuje ako podmnožinu
-niektorú (K+1)-prvkovú podmnožinu $\{v_0, ..., v_Q\}$.
-Naopak zoberme si jednu (K+1)-prvkovú podmnožina $\{v_0, ..., v_Q\}$ a označme ju $A$.
-Všetky prvky $A$ majú z definície kvórové rezy presne tieto (K+1)-prvkové podmnožiny,
+niektorú $(K+1)$-prvkovú podmnožinu $\{v_0, ..., v_Q\}$.
+Naopak zoberme si jednu $(K+1)$-prvkovú podmnožina $\{v_0, ..., v_Q\}$ a označme ju $A$.
+Všetky prvky $A$ majú z definície kvórové rezy presne tieto $(K+1)$-prvkové podmnožiny,
 a teda jeden kvórový rez pre každý prvok je samotná množina $A$. Teda dokonca $A$
 je kvórum.
 
@@ -56,7 +56,7 @@ Ukázali sme teda, že všetky minimálne kvóra v reťazovej siete sú $[\{v_0,
 Ako sme už dokázali v kapitole \ref{kap:security} bezpečnostný koeficient je
 veľkosť ich najmenšieho prieniku.
 
-Máme teda (K+1)-prvkové podmnožiny (Q+1)-prvkovej množiny a hľadáme ich
+Máme teda $(K+1)$-prvkové podmnožiny $(Q+1)$-prvkovej množiny a hľadáme ich
 najmenší prienik z čoho dostaneme, že bezpečnostný koeficient
 reťazovej siete je\\ $max (0,2K-Q+1)$.
 Keďže reťazová sieť je špeciálnym typom NQK-siete, tak vieme aj
@@ -68,7 +68,7 @@ Teraz vieme povedať sieti ako zvoliť $Q$ a $K$ aby jej koeficient odolnosti bo
 keďže vieme zvoliť $Q,K$ aby $2K-Q+1$ bolo kladné}
 
 Táto funkcia nadobúda maximum pre $K = \frac{2}{3}Q$. A teda najodolnejšie
-reťazové siete majú koreficient odolnosti rovný $\frac{Q}{3}+1$.
+reťazové siete majú koeficient odolnosti rovný $\frac{Q}{3}+1$.
 Teda optimum je zvoliť počet uzlov vo vlastných kvórových rezov rovný dvoch
 tretín počtu uzlom ktorým vrchol dôveruje.
 
@@ -138,3 +138,5 @@ Rozlíšime 2 prípady:
         $<v_{(j+1) mod N}, v_{(j+Q) mod N}> \subseteq\: <v_{(j+1) mod N}, v_i$.
         Čo je spor s tým, že $Q_1$ obsahuje kvórový rez $v_j$ a teda je kvórum.
 \end{enumerate} $\blacksquare$
+
+\textbf{TODO}
