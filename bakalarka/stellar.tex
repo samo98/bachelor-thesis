@@ -58,8 +58,8 @@ teda aj tvorí kvórum.
 
 \end{flushleft}
 
-Uzly budeme rozdeľovať do dvoch hlavných skupín -- na uzly držiacich sa protokolu a
-nedržiacich sa protokolu. Medzi uzly nedodržiavajúce protokol zaraďujeme buď
+Uzly budeme rozdeľovať do dvoch hlavných skupín -- na uzly držiacie sa protokolu a
+nedržiace sa protokolu. Medzi uzly nedodržiavajúce protokol zaraďujeme buď
 Byzantíncov (napríklad nepriateľ sa zmocnil uzlu) alebo uzly, ktoré akýmkoľvek
 spôsobom zlyhali.
 Cieľom protokolu je aby uzly dodržujúce protokol dosiahli konsenzus. Toto vieme
@@ -212,15 +212,15 @@ stavu, teda ak už pre neho bol blok \textit{akceptovaný}, nemôže ho blok
 prehlásiť spätne za \textit{neznámy}).
 Správy si môžeme predstavovať ako hlasovanie uzlov, či má alebo nemá byť
 blok pridaný do blokovej reťaze.
-Keď pre každý korektný uzol bude blok \textit{potrdený}, môžu si ho pridať
+Keď pre každý korektný uzol bude blok \textit{potvrdený}, môžu si ho pridať
 do svojej blokovej reťaze.
 
-Pre potreby našej práce však nebudeme potrebovať vedieť ako a aké správy si medzi
-sebou uzly budú vymieňať.
 Uzly si budú meniť stavy bloku na základe správ od uzlov zo svojich kvórových rezov
 spomínaných vyššie, avšak detajly presných pravidiel na základe ktorých sa tieto
-stavy budú meniť využívať nebudeme. Plnohodnotne nám bude stačiť intuícia zavedenia
-kvórových rezov a kvór.
+stavy budú meniť využívať nebudeme.
+Preto pre potreby našej práce nepotrebujeme vedieť ako a aké správy si medzi
+sebou uzly budú vymieňať.
+Plnohodnotne nám bude stačiť intuícia zavedenia kvórových rezov a kvór.
 
 Presnješie detajly Stellar konsenzus protokolu, procesu schvaľovania bloku,
 samotné dôkazy, že takéto schvaľovanie vedie ku v praxi plne funkčnej sieti a
@@ -233,7 +233,7 @@ v podkapitole \ref{kap:theorytobank}.
 \\
 
 \begin{itemize}
-\item  \textbf{Jedna globálna} -- naša sieť sa naozaj nedelí na žiadne posiete
+\item  \textbf{Jedna globálna} -- naša sieť sa naozaj nedelí na žiadne podsiete
 a každý uzol môže komunikovať s každým
 \item  \textbf{Decentralizovaná} -- každý uzol si drží svoju kópiu blokovej reťaze
 a žiadna centrálna kópia neexistuje

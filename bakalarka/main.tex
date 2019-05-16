@@ -124,7 +124,7 @@ Fakulta matematiky, fyziky a informatiky
 % -------------------
 %   Poďakovanie - nepovinné
 % -------------------
-\setcounter{page}{3}
+\setcounter{page}{5}
 \newpage
 
 \begin{flushleft}\textbf{\Large Poďakovanie}\end{flushleft}
@@ -143,22 +143,22 @@ vyrozprávania sa o nástrahách čakajúcich v priebehu vyhotovovania práce.
 \section*{Abstrakt}
 
 Kryptomena Stellar pred pár rokmi prešla na nový protokol, ktorý má vylepšovať
-doteraz známe konsenzus protokoly najmä zjednodušením možnosti vstupu do siete
+dovtedy známe konsenzus protokoly najmä zjednodušením možnosti vstupu do siete
 pre novú entitu.
 Táto práca analyzuje odolnosť tohto protokolu voči zlyhaniam jednotlivých
 entít spolupracujúcich na konsenze. Najprv ukáže, že pre danú sieť nevieme
 v polynomiálnom čase povedať pri koľkých zlyhaniach bude sieť stále bezpečná
 a ani pri koľkých zlyhaniach bude sieť stále schopná dohodnúť sa na konsenze.
-Neskôr sa pozrie na niektoré zaujímavé typy sietí pri ktorých odolnosť vyjadriť
-vieme.
-Vytvorí algoritmus na presné vyjadrenie odolnosti, respektíve rýchlejší
-algoritmus na odhady zhora pre odolnosť siete.
+Neskôr sa pozrie na niektoré zaujímavé typy sietí pri ktorých vieme vyjadriť
+odolnosť rýchlo.
+Vytvorí tiež algoritmus na presné vyjadrenie odolnosti malých sietí a aj rýchlejší
+algoritmus na odhady zhora pre odolnosť väčších sietí.
 Na záver rozanalyzuje bezpečnosť a odolnosť náhodne vytvorených sietí.
 Túto analýzu ukončí odporúčaním volenia parametrov siete aby bola sieť schopná
 prežiť čo najviac zlyhaní.
 
-\paragraph*{Kľúčové slová:} Stellar konsenzus protokol, byzantínske chyby,
-kvórum, odolnosť siete
+\paragraph*{Kľúčové slová:} Stellar, konsenzus, byzantínske chyby,
+kvórum, bezpečnosť, odolnosť siete
 % --- Koniec Abstrakt - Slovensky
 
 
@@ -168,25 +168,25 @@ kvórum, odolnosť siete
 \newpage 
 \section*{Abstract}
 
-A few years ago, cryptocurrency Stellar has switched to a new protocol
-to improve the consensus protocols known so far. In particular by simplifying
+A few years ago, cryptocurrency Stellar switched to a new protocol
+to improve previously known consensus protocols in particular by simplifying
 network entry for a new entity.
-This thesis analyzes the resilence of this protocol to Byzantine failures.
-Firstly it shows impossibility to evaluate number of failures the network is
-still safe or the number of failures, the network can still agree on consensus in
-polynomial time.
+This thesis analyzes the resilience of this protocol to Byzantine failures.
+Firstly it shows impossibility to evaluate number of failures in which the
+network is still safe and the number of failures in which the network can still
+agree on consensus in polynomial time.
 Later, it considers some interesting types of networks in which we are able
-to calculate resilence.
-It creates algorithm to accurately express resilence, or even faster method
-for estimating network resilence quickly.
-At the end it analyzes security and resilence of randomly created networks.
+to calculate resilience quickly.
+It creates algorithm to accurately express resilience for small networks and
+faster one to determine the upper bound for resilience of larger networks.
+At the end it analyzes security and resilience of randomly created networks.
 This analysis ends with recommendations for choosing network parameters to
-make resilence as high as possible.
+make resilience as high as possible.
 
 
 
-\paragraph*{Keywords:}  Stellat consensus protocol, Byzantine failures,
-quorum, network resilence
+\paragraph*{Keywords:}  Stellar, consensus, Byzantine failures,
+quorum, safety, network resilience
 
 % --- Koniec Abstrakt - Anglicky
 

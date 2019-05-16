@@ -80,7 +80,7 @@ a takými budeme uvažovať aj uzly $v_0$ a $v_{N-1}$.
 Ďalej si zadefinujeme aj intervaly uzlov, ktoré budeme označovať ako
 
 $$<v_a, v_b> = \begin{cases}
-                 \{v_a, ..., v_b\} & a<=b \\
+                 \{v_a, ..., v_b\} & a\leq b \\
                  \{v_a, ...,v_{N-1}, v_0,... v_b\} & inak
                \end{cases}
 $$
@@ -139,4 +139,52 @@ Rozlíšime 2 prípady:
         Čo je spor s tým, že $Q_1$ obsahuje kvórový rez $v_j$ a teda je kvórum.
 \end{enumerate} $\blacksquare$
 
-\textbf{TODO}
+\pagebreak
+
+Teraz už ľahko vieme odhandúť najmenší množný počet uzlov v kvóre.
+Totiž v každej $Q$-tici (tých je $N$) je aspoň $K$ uzlov a zároveň každý uzol
+z kvóra sme zarátali presne $Q$-krát, teda uzlov v kvóre je aspoň
+$\lceil\frac{NK}{Q}\rceil$.
+Keď už vieme minimálnu veľkosť kvóra vieme odhadnúť aj minimálny prienik dvoch kvór.
+Keďže všetkých uzlov je $N$, tak každý prienik bude mať aspoň
+$2\lceil\frac{NK}{Q}\rceil-N$ uzlov.
+Aby sme sa nemusli zaoberať prípadmi kde sa budeme trápiť s hornými celými časťami
+a technicky ťažšími konštrukciami, ďalej v analýze pokračujme len s prípadom keď
+$N$ je násobkom $Q$.\\
+V tomto prípade ukážeme, že tento náš odhad je aj tesný a je to náš bezpečnostný
+koeficient.
+Uvažujme dve kvóra:
+
+$$\{v_i\ |\ i\ mod\ Q < k\}\ a \ \{v_i\ |\ i\ mod\ Q \geq Q-k\}$$
+
+Je priamočiare overiť, že naozaj obe množiny sú kvóra a ich prienik je rovný\\
+$\max(\frac{N}{Q}(2K-Q),0)$, čo teda naozaj sedí po úprave s našim odhadom
+a teda naozaj toto je najmenší možný prienik kvór.
+Zas sa teda ukazuje, že voliť $K\leq\frac{Q}{2}$ nevedie k bezpečným sieťam.
+Všimnime si, že bezpečnostný koeficient vychádza podobne ako pri
+\textit{reťazových} sieťach, avšak je prenásobený $\frac{N}{Q}$, keďže uzly
+sú medzi sebou viac zviazané a neexistujú žiadne \uv{centrálne} uzly na ktorých
+všetko závisí.
+
+Podobne ako pri \textit{reťazových} sieťach sa zamyslime ako voliť $K$ aby bol
+koeficient odolnosti, čo najvyšší. Bezpečnostný koeficient ako aj koeficient
+životaschopnosti je lineárna funkcia v $K$ s opačným vedúcim znamienkom
+(jedna klesá, druhá stúpa) a preto keď chceme maximalizovať minimum z týchto
+dvoch funkcií, stačí ich položiť do rovnosti ($K\leq\frac{Q}{2}$ už neuvažujeme).
+
+Teda maximálny koeficient odolnosti získame ak platí:
+
+\centerline{$\frac{N}{Q}(2K-Q)=Q-K+1$\hspace{10mm}teda\hspace{10mm}$K=\frac{Q+N+1}{2N+Q}Q$}
+
+Pri zvolení takto optimálneho $K$ (je jasné, že nie vždy nám vyjde celočíselne a budeme
+musieť číslo zaokrúhliť pre dosiahnutie maxima) dostávame \textit{koeficient odolnosti}:
+
+$$Q-K+1=Q-\frac{Q+N+1}{2N+Q}Q+1=Q(\frac{N-1}{2N+Q})+1=\frac{Q-\frac{Q}{N}}{2+\frac{Q}{N}}+1$$
+
+Keďže $\frac{Q}{N}\leq 1$, tak sa nám ukazuje, že naša sieť sa vie dostať blízko ku odolnosti
+$\frac{Q}{2}$ (alebo aj kúsok ďalej), teda polovici počtu uzlov, ktorým jeden dôveruje.
+Vysvetlenie je jednoduché. Pri $K\leq\frac{Q}{2}$ sme mali nulový prienik, teda siete neboli
+použiteľné. Naopak v našom bepečnostnom koeficente nám vystupovalo $N$, ktorým sme vedeli
+ľubovoľne zväčšiť bezpečnostný koeficient, zatiaľ čo koeficient životaschopnosti
+závisel len od rozdielu $Q$ a $K$. Preto pre dostatočne veľké siete sme vedeli pri vhodnom
+výbere $K$ zvýšiť koeficient odolnosti výrazne.
