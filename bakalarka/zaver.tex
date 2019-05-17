@@ -4,7 +4,7 @@
 
 V tejto práci sme si v úvode predstavili problematiku dosahovania konsenzu,
 ukázali sme si ako využiť riešenie tohto problému vo finančnej sieti, kde
-často musíme rišiť podobné problémy a rátať s nedôveryhodnými entitami v sieti.
+často musíme riešiť podobné problémy a rátať s nedôveryhodnými entitami v sieti.
 Tiež sme si zhrnuli nedostatky existujúcej finančnej siete a takisto doteraz
 známych protokolov, ktoré využívali na vykonávanie transakcií konsenzus
 alebo aj iné metódy, ktoré sú medzi dnešnými kryptomenami populárnejšie.
@@ -21,9 +21,16 @@ zlyhaní uzlov ju nedokáže ovplyvniť. Dokázali sme si, že pre všeobecné s
 je zisťovanie týchto metrík NP-ťažký problém a teda sme si spresnili model
 siete aby sme vedeli o sieti a jej odolnosti povedať aspoň niečo.
 
-Vybrali sme si niektoré konkrétne modely sietí zrátali ich metriky a dostali
-lepší vhľad do závislosti typu siete a jej odolnosti. Dokonca aj našli
-štruktúru siete pri ktorej odolnosť dosahuje čo najväčšie hodnoty.
+Vybrali sme si konkrétne modely \textit{reťazových} a \textit{cyklických} sietí,
+zrátali ich metriky a dostali lepší vhľad do tvorenia kvór v takýchto sieťach.
+Pri \textit{reťazových sieťach} sme zistili, že celá sieť je závislá na menšej
+množine uzlov. Táto centralizácia však nebola až taká nepríjemná, keďže sieť
+dokázala odolať aj zlyhaniu $\frac{1}{3}$ z týchto uzlov.
+Pri \textit{cyklických sieťach} už sme na žiadnu centralizáciu nenarazili,
+dokonca sme si ukázali, že sieť by bola v istých parametroch schopná prežiť
+napadnutie až $\frac{1}{2}$ dôveryhodných uzlov, ktoré si konkrétny uzol vybral.
+Táto sieť je však prudko symetrická a tesne zviazaná, čo sa nám v reálnej
+sieti pravdepodobne nestane.
 
 Na záver sme sa pozreli na to ako by dopadla odolnosť siete ak by boli siete
 vytvorené náhodne. Najprv pri malých sieťach, kde sme metriky vedeli vypočítať
@@ -35,10 +42,13 @@ dokážeme získať odolnosť voči zlyhaniu až $\frac{1}{3}$ entít, čím sa 
 porovnávať aj s centralizovanou verziou protokolov na konsenzus. Zistili sme,
 že takúto vysokú odolnosť dosahujeme keď konkrétna entita je ochotná nechať sa
 presvedčiť okolo $\frac{2}{3}$ entitami, ktorým dôveruje (voľba $K$ v našich
-\textit{NQK-sieťach}).
+\textit{NQK-sieťach}). Naopak voľba $K < \frac{Q}{2}$ sa ukázala ako nevhodná,
+keďže väčšina takto vygenerovaných sietí bola nepoužiteľná s bezpečnostným
+koeficientom 0 a teda sieť nedávala žiadne garancie aj keď sa všetky uzly
+správali podľa protokolu.
 
 Napriek tomu sme dokázali analyzovať len siete s počtom entít do $50$, čo
-nám dáva veľký prietor na zlepšenie. Takisto naša metóda pri väčších sieťach
+nám dáva veľký priestor na zlepšenie. Takisto naša metóda pri väčších sieťach
 nemusela byť veľmi presná a už len lepšie zrátať jej presnosť a tak zlepšiť
 odhady našich metrík môže dať oveľa lepší pohľad do bezpečnosti a životaschopnosti
 sietí založených na Stellar konsenzus protokole.

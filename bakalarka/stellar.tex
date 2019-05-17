@@ -121,7 +121,7 @@ Na obrázku \ref{obr:prienik_kvor} môžeme vidieť príklad siete bez prieniku 
 Disjunktné množiny $\{v_1, v_2\}$ a $\{v_3, v_4\}$ sú kvóra bez prieniku. Takže
 tieto množiny sú samé o sebe schopné schvaľovať bloky a predlžovať blokovú
 reťaz.
-Keďže ale nemajú prienik nemusia schváliť rovanký blok a teda sieť bude
+Keďže ale nemajú prienik nemusia schváliť rovnaký blok a teda sieť bude
 divergovať.
 
 Teraz si definujme operáciu mazania množiny uzlov zo Stellar systému.
@@ -202,7 +202,7 @@ nemôže byť životaschopná. Keďže na uzavretie kvóra potrebujeme aj kvóro
 \section {Priebeh schvaľovania bloku}
 
 Schvaľovanie nového bloku prebieha vo viacerých fázach. Počas tohto procesu sa 
-z pohľadu každého uzlu môže blok náchádzať v 3 rôznych stavoch -
+z pohľadu každého uzlu môže blok nachádzať v 3 rôznych stavoch -
 \textit{neznámy}, \textit{akceptovaný}, \textit{potvrdený}.
 
 Na začiatku schvaľovacieho procesu je pre každý uzol blok \textit{neznámy}.
@@ -244,7 +244,7 @@ sa pripojiť a nastaviť kvórové rezy
 \item  \textbf{Otvorené členstvo medzi schvaľovateľmi} -- \uv{schvaľovateľmi} sú
 vlastne uzly, ktoré sa nachádzajú v niekoho kvórovom reze. Stačí si teda vybudovať
 dôveru medzi ostatnými členmi siete, samotné pravidlá siete nebránia byť schvaľovateľom
-\item  \textbf{Flexibilná dôvera} -- každy uzol si určuje sám svoje kvórové rezy a teda
+\item  \textbf{Flexibilná dôvera} -- každý uzol si určuje sám svoje kvórové rezy a teda
 sám určuje komu bude dôverovať
 \item  \textbf{Odolnosť voči zlyhaniam} -- ako sme si ukázali toto záleží už na samotnom
 systéme, ale pokiaľ si budú uzly rozumne voliť kvórové rezy, bude mať sieť aj túto vlastnosť.

@@ -7,8 +7,7 @@ kvórové rezy určitým spôsobom a skúsime sa zamyslieť ako veľmi by boli t
 siete bezpečné.
 Po analýze niektorých typov dostaneme lepší náhľad do tvorenia kvór a
 kvórových rezov a budeme vedieť popísať niektoré osvedčené postupy na tvorenie
-kvórových rezov aj pre všeobecné siete, tak aby bola jej odolnosť vysoká
-aj keď ju nebudeme vedieť exaktne zrátať.
+kvórových rezov, tak aby bola odolnosť siete vysoká.
 
 \section {Reťazové siete}
 
@@ -62,10 +61,10 @@ reťazovej siete je\\ $max (0,2K-Q+1)$.
 Keďže reťazová sieť je špeciálnym typom NQK-siete, tak vieme aj
 koeficient životaschopnosti a to je $Q-K+1$.
 
-Teraz vieme povedať sieti ako zvoliť $Q$ a $K$ aby jej koeficient odolnosti bol
-čo najväčší, teda hľadáme $\max\limits_{\forall K,Q} \: \min (2K-Q+1, Q-K+1)$.
+Teraz vieme povedať sieti ako zvoliť $K$ aby jej koeficient odolnosti bol
+čo najväčší, teda hľadáme $\max\limits_{\forall K} \: \min (2K-Q+1, Q-K+1)$.
 \footnote{bezpečnostný koeficient rovný 0 sme nemuseli zbytočne uvažovať,
-keďže vieme zvoliť $Q,K$ aby $2K-Q+1$ bolo kladné}
+keďže vieme zvoliť $K$ aby $2K-Q+1$ bolo kladné}
 
 Táto funkcia nadobúda maximum pre $K = \frac{2}{3}Q$. A teda najodolnejšie
 reťazové siete majú koeficient odolnosti rovný $\frac{Q}{3}+1$.
@@ -135,7 +134,7 @@ Rozlíšime 2 prípady:
   \item $v_i\notin <v_{(j+1) mod N}, v_{(j+Q) mod N}>$
 
         V takomto prípade $Q_1$ neobsahuje žiadny kvórový rez $v_j$, keďže\\
-        $<v_{(j+1) mod N}, v_{(j+Q) mod N}> \subseteq\: <v_{(j+1) mod N}, v_i$.
+        $<v_{(j+1) mod N}, v_{(j+Q) mod N}> \subseteq\: <v_{(j+1) mod N}, v_i)$.
         Čo je spor s tým, že $Q_1$ obsahuje kvórový rez $v_j$ a teda je kvórum.
 \end{enumerate} $\blacksquare$
 
@@ -148,7 +147,8 @@ $\lceil\frac{NK}{Q}\rceil$.
 Keď už vieme minimálnu veľkosť kvóra vieme odhadnúť aj minimálny prienik dvoch kvór.
 Keďže všetkých uzlov je $N$, tak každý prienik bude mať aspoň
 $2\lceil\frac{NK}{Q}\rceil-N$ uzlov.
-Aby sme sa nemusli zaoberať prípadmi kde sa budeme trápiť s hornými celými časťami
+
+Aby sme sa nemuseli zaoberať prípadmi kde sa budeme trápiť s hornými celými časťami
 a technicky ťažšími konštrukciami, ďalej v analýze pokračujme len s prípadom keď
 $N$ je násobkom $Q$.\\
 V tomto prípade ukážeme, že tento náš odhad je aj tesný a je to náš bezpečnostný
@@ -158,7 +158,7 @@ Uvažujme dve kvóra:
 $$\{v_i\ |\ i\ mod\ Q < k\}\ a \ \{v_i\ |\ i\ mod\ Q \geq Q-k\}$$
 
 Je priamočiare overiť, že naozaj obe množiny sú kvóra a ich prienik je rovný\\
-$\max(\frac{N}{Q}(2K-Q),0)$, čo teda naozaj sedí po úprave s našim odhadom
+$\max(\frac{N}{Q}(2K-Q),0)$, čo teda naozaj sedí s našim odhadom po úprave
 a teda naozaj toto je najmenší možný prienik kvór.
 Zas sa teda ukazuje, že voliť $K\leq\frac{Q}{2}$ nevedie k bezpečným sieťam.
 Všimnime si, že bezpečnostný koeficient vychádza podobne ako pri
@@ -188,3 +188,6 @@ použiteľné. Naopak v našom bepečnostnom koeficente nám vystupovalo $N$, kt
 ľubovoľne zväčšiť bezpečnostný koeficient, zatiaľ čo koeficient životaschopnosti
 závisel len od rozdielu $Q$ a $K$. Preto pre dostatočne veľké siete sme vedeli pri vhodnom
 výbere $K$ zvýšiť koeficient odolnosti výrazne.
+
+Ako príklad si môžeme zobrať sieť s parametrami $N=6, Q=3, K=2$, kde nám koeficient odolnosti
+vyjde 2.

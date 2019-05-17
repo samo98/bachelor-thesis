@@ -6,7 +6,7 @@ ukazuje sa, že sieť skončí viac či menej centralizovaná alebo naopak náho
 v ktorej ťažko hľadať pravidlá a zákonitosti podľa ktorých sa bude sieť vyvíjať
 ďalej, poprípade ktoré uzly majú väčšiu váhu pri rozhodovaní siete o novom bloku.
 
-\textit{Reťazové} siete z minulej kapitoly boli príkladom siete, ktorá skončila
+\textit{Reťazové siete} z minulej kapitoly boli príkladom siete, ktorá skončila
 centralizovaná, presnejšie závislá len na niekoľkých uzloch.
 Pokiaľ sieť naozaj vznikala organicky bez vonkajších zásahov
 (každý uzol si zvolil kvórové rezy podľa seba), tak tieto uzly na ktorých závisí 
@@ -59,8 +59,8 @@ Na hľadanie kvór sme naprogramovali tri stratégie:
 \end{itemize}
 
 Použitie stratégie si môžeme zvoliť parametrom pri spúštaní programu.
-Overiť či je podmnožina kvórum je jednoduché, stačí overiť, či existuje kvórový rez
-každého vrchola taký, že aj on je celý v danej podmnožine.
+Overiť či je podmnožina kvórum je jednoduché, stačí overiť, či pre každý vrchol existuje
+kvórový rez taký, že aj on je celý v danej podmnožine.
 
 Stratégia \textit{random} postupuje tak, že sa spustí niekoľko krát.
 Na začiatku každého spustenia si náhodne určí štartovací vrchol a udržuje si aktuálnu
@@ -103,15 +103,15 @@ keď ich chceme nájsť viac spustíme tento algoritmus viac krát.
 \end{algorithmic}
 \end{algorithm}
 
-Keď už máme nájdený neaký zoznam kvór (či už všetky alebo aspoň niekoľko náhodných),
+Keď už máme nájdený nejaký zoznam kvór (či už všetky alebo aspoň niekoľko náhodných),
 tak ešte musíme zistiť ich najmenší prienik. To budeme robiť jednoducho a teda tak,
 že porovnáme každé kvórum s každým, zrátame počet spoločných uzlov a zistíme
 najmenší výsledok.\\
 Samotný kód v C++ sa nachádza v prílohe.
 
-\section {Exaktné výsledky}
+\section {Exaktné metriky malých sietí}
 
-Najprv sa skúsime pozrieť na siete, ktorým vieme zrátat bezpečnostný koeficient
+Najprv sa skúsime pozrieť na siete, ktorým vieme zrátať bezpečnostný koeficient
 exaktne. 
 Aj keď stratégia \textit{minimal} je rýchlejšia ako \textit{all}, keďže nekontroluje
 úplne všetky podmnožiny, tak nie je použiteľná na siete s vysokým počtom uzlov.
@@ -192,7 +192,7 @@ Pri štúdiu našich \textit{zjednodušených NQK-sietí}, teda máme že tento 
 koeficient je aspoň $2K-Q+1$ (ak je nenulový). Týmto môžeme získať intuíciu rastu
 minima bezpečnostného koeficientu medzi vygenerovanými sieťami s daným pomerom $K/Q$.
 Keďže jednak pre zväčšujúci sa pomer, sa bude funkcia $2K-Q+1$ tiež zväčšovať a tiež
-fixný menovateľ zlomku má len obmedzenú možnosť priblížiť sa 1 (najbližsie sa dostane pri
+fixný menovateľ zlomku má len obmedzenú možnosť priblížiť sa 1 (najbližšie sa dostane pri
 $\frac{Q-1}{Q}$), teda aj samotné $Q$ bude čoraz väčšie. Mohlo by sa teda zdať, že
 najlepšie pre uzly je voliť $K$ blízke $Q$. Avšak v takýchto prípadoch klesá
 \textit{koeficient životaschopnosti}.
@@ -237,7 +237,7 @@ Teraz sa skúsime pozrieť aj na siete s väčším počtom uzlov, avšak už
 na hľadanie bezpečnostného koeficientu budeme schopný požiť len stratégiu
 \textit{random}. Tá však nemusí nájsť všetky kvóra a teda nebudeme schopný
 určiť tento koeficient presne, ale budeme ho vedieť zhora ohraničiť,
-keďže ak už neaký prienik kvór nájdeme, tak buď sme ešte neaký menší nenašli
+keďže ak už nejaký prienik kvór nájdeme, tak buď sme ešte nejaký menší nenašli
 alebo už menší neexistuje.
 
 Vygenerovali sme si teda \textit{zjednodušené NQK-siete} s parametrami
@@ -261,7 +261,7 @@ mali uvedomiť, že v grafe máme len horné odhady na bezpečnostné koeficient
 teda reálne môžu byť aj nižšie. V každom prípade to potvrdzuje našu hypotézu
 o tom, že voliť kvórové rezy tak, že $K<\frac{Q}{2}$ vedie k veľmi nízkemu
 až nulovému koeficientu bezpečnosti a teda je dobré používať väčšie $K$.
-Zvyšok grafu vyzerá veľmi podobne \ref{obr:KkuQ_bezpecnost}.
+Zvyšok grafu vyzerá veľmi podobne ako \ref{obr:KkuQ_bezpecnost}.
 Môžme preto ľahko našu hypotézu rozšíriť aj na väčšie siete a predpokladať,
 že bezpečnostný koeficient bude rásť podobne.
 Čo nám dáva lepší odhad pri budovaní siete o jej bezpečnosti.
@@ -279,14 +279,14 @@ väčšie siete a iba horný odhad bezpečnostného koeficientu a teda aj koefic
 odolnosti.
 Podobne ako pri malých sieťach sa nám znova potrvdzuje hypotéza o ideálnom
 volení parametra $K$ v sieti, tak aby sme maximalizovali koeficient odolnosti.
-Ukazuje sa nám, že pri mierne nižsom zvolení pomeru vieme získať o kúsok
+Ukazuje sa nám, že pri mierne nižšom zvolení pomeru vieme získať o kúsok
 väčší koeficient odolnosti (v našom prípade o 1), avšak bezpečnosť siete je oveľa
 dôležitejšia ako samotná životaschopnosť a tak podobne ako v \cite{li2007beyond},
-môžeme tvrdiť že predsalen je lepšie zvoliť pomer $\frac{2}{3}$. Pretože aj keď
-celková odolnosť môže vyjsť o kúsok horšie, keďže bezpečnostný koeficient vyjde
-lepšie \ref{obr:KkuQ_bezpecnost_large}, tak nepriateľ prinajhoršom iba zablokuje
-sieť ale dáta v nej ostanú správne. A z tohto stavu je jednoduchšie sieť opraviť
-a obnoviť jej prevádzku.\\
+môžeme tvrdiť že predsalen je lepšie zvoliť pomer medzi $K$ a $Q$ ako $\frac{2}{3}$.
+Pretože aj keď celková odolnosť môže vyjsť o kúsok horšie, keďže bezpečnostný koeficient
+vyjde lepšie (graf \ref{obr:KkuQ_bezpecnost_large}), tak nepriateľ prinajhoršom iba
+zablokuje sieť ale dáta v nej ostanú správne. A z tohto stavu je jednoduchšie sieť
+opraviť a obnoviť jej prevádzku.\\
 Čo však na tomto grafe vidno omnoho lepšie je, že čím viac sa vzďaľujeme od tohto
 magického pomeru, tým viac sa naša odchýlka zväčšuje.
 A teda najmä pri sieťach kde ťažko hovoriť o dôveryhodnosti konkrétnych uzlov
